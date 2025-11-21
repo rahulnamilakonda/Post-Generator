@@ -1,6 +1,8 @@
 import operator
 from typing import Annotated, List, Literal, TypedDict
 
+from pydantic import Field
+
 
 class PostState(TypedDict):
     topic: str
