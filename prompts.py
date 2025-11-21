@@ -9,7 +9,7 @@ Topic/Context: {topic}
 Requirements:
 - Add a story as to around the topic, it could be a friend who is confussed or While I'm working this has come, something similar which is catchy.
 - Tailor tone & style based on the platform.
-- Dynamically decide the post length based on platform + topic.
+- Post length should not be more than 1000 characters based on platform + topic.
 - First line should be a strong hook.
 - Encourage users to click the link naturally.
 - Include a subtle call to action asking for comments or engagement.
@@ -17,6 +17,8 @@ Requirements:
 - Do NOT hallucinate any details outside the provided topic.
 - Do NOT use placeholders like “read more here”.
 - Deliver ONLY the final post.
+- Please add any documentation links if there exits.
+- Create a FOMO to the reader.
 
 Generate the final social media post now:""",
 )
