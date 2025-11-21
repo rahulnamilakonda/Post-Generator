@@ -12,3 +12,4 @@ class EvalOutputSchema(BaseModel):
             description="A breif description as why the post is approved or refused, so to use to for the next iteration for improvement"
         ),
     ]
+    title: Annotated[str, Field("Provide a title for the post")]

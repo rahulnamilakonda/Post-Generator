@@ -9,29 +9,43 @@ from models.eval_output import EvalOutputSchema
 from states.post_state import PostState
 from prompts import generationPrompt, evaluationPrompt
 from chat_models import genModel, evalModelWithStructOutput
-
-load_dotenv()
+from utils.utils import writeToFile
 
 
 def generatePost(state: PostState):
     prompt = generationPrompt
+    prevPost = None
+    print(f'--------------------Iteration: {state["iteration"]}----------------------')
+    if "prevPosts" in state and state["prevPosts"]:
+        prevPost = state["post"]
+
     promptStr = prompt.format(platform=state["platform"], topic=state["topic"])
+    print(f"-------------------- Generating Post ----------------------")
+
     post = genModel.invoke(promptStr).content
+
+    if prevPost:
+        return {"post": post, "prevPosts": prevPost}
     return {"post": post}
 
 
 def evaluatePost(state: PostState):
     prompt = evaluationPrompt
-    promptStr = prompt.format(platform=state["platform"], topic=state["post"])
+    promptStr = prompt.format(platform=state["platform"], post=state["post"])
+    print(f"-------------------- Evaluating Post ------------------------")
     res = evalModelWithStructOutput.invoke(promptStr)
-    return {"status": res.status, "feedback": [res.feedback]}  # type: ignore
+    print(res)
+    state["iteration"] = 1 + state.get("iteration", 0)
+    return {"status": res.status, "feedback": [res.feedback], "title": res.title}  # type: ignore
 
 
 def checkPostStatus(state: PostState) -> Literal["approved", "refused"]:
     if state["status"] == "approved" or state["iteration"] > state["max_iterations"]:
+        print("------------------- Approved --------------------")
         return "approved"
     else:
-        state["iteration"] = 1 + state.get("iteration", 0)
+        print("------------------- Rejected --------------------")
+        # state["prevPosts"] = [state["prevPosts"]]  # type: ignore
         return "refused"
 
 
@@ -44,10 +58,14 @@ graph.add_node("evaluatePost", evaluatePost)
 
 graph.add_edge(START, "generatePost")
 graph.add_edge("generatePost", "evaluatePost")
-graph.add_conditional_edges("evaluatePost", checkPostStatus)
-graph.add_edge("approved", END)
-graph.add_edge("refused", "generatePost")
-
+graph.add_conditional_edges(
+    "evaluatePost",
+    checkPostStatus,
+    {
+        "approved": END,
+        "refused": "generatePost",
+    },
+)
 
 workflow = graph.compile()
 final_post = workflow.invoke(
@@ -60,3 +78,5 @@ final_post = workflow.invoke(
         }
     )
 )
+
+writeToFile(final_post["post"], final_post["title"])

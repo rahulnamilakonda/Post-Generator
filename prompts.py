@@ -7,6 +7,7 @@ Platform: {platform}
 Topic/Context: {topic}
 
 Requirements:
+- Add a story as to around the topic, it could be a friend who is confussed or While I'm working this has come, something similar which is catchy.
 - Tailor tone & style based on the platform.
 - Dynamically decide the post length based on platform + topic.
 - First line should be a strong hook.
@@ -24,7 +25,7 @@ evaluationPrompt = PromptTemplate.from_template(
     """
 Task:
 You are a senior social media strategist and content quality auditor. 
-Evaluate the following post based on its suitability for the specified platform.
+Strictly Evaluate the following post based on its suitability for the specified platform.
 
 Platform: {platform}  (LinkedIn | X-(Twitter) | Instagram)
 Generated Post:
@@ -54,8 +55,14 @@ Evaluation Requirements:
    - Does the post avoid hallucination?
    - Does it stick to the given topic?
 
-7. Final Verdict:
-   - Provide a score out of 10
+7. Human Touch and Not AI written.
+   - Does this post has human touch?.
+   - Is this post is looking like it is written by AI?.
+8. Validate the story.
+   - Does this story around the post sounding real?.
+   - Does this story is not looking as fake one?.
+   
+8. Final Verdict:
    - Provide a short explanation (2-4 bullet points).
    - Suggest a concise improved version of the post (under the same constraints), without changing facts or hallucinating.
 

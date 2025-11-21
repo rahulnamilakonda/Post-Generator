@@ -6,6 +6,7 @@ from pydantic import Field
 
 class PostState(TypedDict):
     topic: str
+    title: str
     platform: Literal["LinkedIn", "X-(Twitter)", "Instagram"]
     prevPosts: Annotated[List[str], operator.add]
     feedback: Annotated[List[str], operator.add]
