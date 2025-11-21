@@ -7,5 +7,5 @@ def writeToFile(post: str, filename: str):
         os.mkdir("output")
 
     # filename = str(uuid.uuid1())
-    with open(f"output/{filename}.txt", "w", encoding="utf-8") as f:
+    with open(f"output/{filename}.txt", "w+", encoding="utf-8") as f:
         f.writelines(post)

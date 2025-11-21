@@ -58,10 +58,12 @@ Evaluation Requirements:
 7. Human Touch and Not AI written.
    - Does this post has human touch?.
    - Is this post is looking like it is written by AI?.
+
 8. Validate the story.
+   - I need a solid storng story around the post if you feel its not solid enough   reject immediately and give feedback for improvement - Very IMPORTANT.
    - Does this story around the post sounding real?.
    - Does this story is not looking as fake one?.
-   
+
 8. Final Verdict:
    - Provide a short explanation (2-4 bullet points).
    - Suggest a concise improved version of the post (under the same constraints), without changing facts or hallucinating.
