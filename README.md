@@ -72,6 +72,8 @@ This makes the project fully modular and easy to adapt.
 
 ## 🚀 Usage
 
+### Interactive Mode
+
 ```bash
 python main.py
 ```
@@ -81,6 +83,24 @@ Follow the prompts to:
 2. Select target platform (LinkedIn/Instagram/Twitter)
 3. Get your AI-generated post
 4. Optionally refine with feedback
+
+### Command Line Mode
+
+You can also generate posts directly via command line arguments:
+
+```bash
+python main.py <platform> <post_title>
+```
+
+**Examples:**
+```bash
+python main.py linkedin "MCP vs API"
+python main.py linkedin MCP vs API
+python main.py instagram "Top 10 Travel Destinations"
+python main.py twitter "Breaking News in AI"
+```
+
+This will generate a post for the specified platform and topic, then save it directly.
 
 ### 📂 Output
 

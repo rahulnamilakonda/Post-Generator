@@ -72,7 +72,7 @@ if len(sys.argv) > 1:
     print("Arguments Passed: ")
 
     platform = sys.argv[1]
-    topic = sys.argv[2]
+    topic = " ".join(sys.argv[2:])
     print("--------------------------------------")
     print("Platform: ", platform, "Topic: ", topic)
     print("--------------------------------------")
