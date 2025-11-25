@@ -10,6 +10,7 @@ from states.post_state import PostState
 from prompts import generationPrompt, evaluationPrompt
 from chat_models import genModel, evalModelWithStructOutput
 from utils.utils import writeToFile
+import sys
 
 
 def generatePost(state: PostState):
@@ -35,8 +36,8 @@ def evaluatePost(state: PostState):
     print(f"-------------------- Evaluating Post ------------------------")
     res = evalModelWithStructOutput.invoke(promptStr)
     print(res)
-    state["iteration"] = 1 + state.get("iteration", 0)
-    return {"status": res.status, "feedback": [res.feedback], "title": res.title}  # type: ignore
+    iteration = 1 + state.get("iteration", 0)
+    return {"status": res.status, "feedback": [res.feedback], "title": res.title, "iteration": iteration}  # type: ignore
 
 
 def checkPostStatus(state: PostState) -> Literal["approved", "refused"]:
@@ -67,16 +68,33 @@ graph.add_conditional_edges(
     },
 )
 
-workflow = graph.compile()
-final_post = workflow.invoke(
-    PostState(
-        **{
-            "platform": "LinkedIn",
-            "iteration": 0,
-            "max_iterations": 5,
-            "topic": "Difference between langchain, langgraph and langsmith",
-        }
-    )
-)
+if len(sys.argv) > 1:
+    print("Arguments Passed: ")
 
-writeToFile(final_post["post"], final_post["title"])
+    platform = sys.argv[1]
+    topic = sys.argv[2]
+    print("--------------------------------------")
+    print("Platform: ", platform, "Topic: ", topic)
+    print("--------------------------------------")
+
+    workflow = graph.compile()
+    final_post = workflow.invoke(
+        PostState(
+            **{
+                "platform": platform,
+                "iteration": 0,
+                "max_iterations": 5,
+                "topic": topic,
+            }
+        )
+    )
+
+    writeToFile(final_post["post"], final_post["title"])
+    print("--------------------------------------")
+    print(f"Post Saved in outputs/{final_post['title']}")
+    print("--------------------------------------")
+
+else:
+    print("-----------------------------------------")
+    print("Sufficent Arguments are not passed")
+    print("-----------------------------------------")
