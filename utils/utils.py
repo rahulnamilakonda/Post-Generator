@@ -1,4 +1,5 @@
 import os
+import re
 import uuid
 import requests
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -44,6 +45,6 @@ def getOpt(opt: str):
 def getYoutubeTitle(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
-    return soup.find("meta", property="og:title")["content"].replace(  # type:ignore
-        ":", ""
-    )  # type:ignore
+    op = soup.find("meta", property="og:title")["content"]  # type:ignore
+    op = op if str(op).strip() else "No Filename"
+    return re.sub(r"^[A-Za-z ]+$", "", op)  # type:ignore
