@@ -46,5 +46,7 @@ def getYoutubeTitle(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
     op = soup.find("meta", property="og:title")["content"]  # type:ignore
-    op = op if str(op).strip() else "No Filename"
-    return re.sub(r"^[A-Za-z ]+$", "", op)  # type:ignore
+    op = str(op) if str(op).strip() else "No Filename"
+    op = re.sub(r"[^A-Za-z ]", "", op)  # type:ignore
+    print(op)
+    return op
