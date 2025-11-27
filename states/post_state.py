@@ -14,3 +14,5 @@ class PostState(TypedDict):
     iteration: int
     status: Literal["approved", "refused"]
     max_iterations: int
+    mode: Literal[1, 2]
+    transcript: str
