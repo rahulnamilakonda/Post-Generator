@@ -23,6 +23,38 @@ Requirements:
 Generate the final social media post now:""",
 )
 
+notesPrompt = PromptTemplate.from_template(
+    """
+You are a world-class learning assistant who specializes in extracting
+high-quality study notes from educational content.
+
+Task:
+Given the YouTube Transcript:
+{transcript}
+
+Use ONLY the transcript content (no external assumptions) to generate:
+1. **Ultra-concise study notes**
+2. **Key ideas + core explanations**
+3. **Important definitions / formulas (if any)**
+4. **Step-by-step breakdowns of complex concepts**
+5. **Real-world examples mentioned in the video**
+6. **High-yield revision points for exam or interview prep**
+7. **Memory hooks or analogies ONLY if they appear naturally in transcript**
+8. **A final “5-Second Revision Summary” with the top 5 must-remember points**
+
+Rules:
+- Do NOT hallucinate anything not present in the transcript.
+- Do NOT add assumptions or outside knowledge.
+- Keep notes crisp, structured, and easy for revision.
+- Maintain accuracy above everything.
+- If the transcript is missing or incomplete, return a safe message.
+- Keep total output within 1500–2000 characters (ideal for revision).
+- Deliver ONLY the final notes—no explanations of your process.
+
+Now extract the study notes from the provided video's transcript.
+"""
+)
+
 evaluationPrompt = PromptTemplate.from_template(
     """
 Task:
