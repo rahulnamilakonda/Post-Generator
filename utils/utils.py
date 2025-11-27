@@ -44,4 +44,6 @@ def getOpt(opt: str):
 def getYoutubeTitle(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
-    return soup.find("meta", property="og:title")["content"]  # type:ignore
+    return soup.find("meta", property="og:title")["content"].replace(  # type:ignore
+        ":", ""
+    )  # type:ignore
