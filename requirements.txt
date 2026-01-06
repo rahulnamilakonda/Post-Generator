@@ -5,3 +5,8 @@ langchain-openai
 python-dotenv
 youtube-transcript-api
 BeautifulSoup
+langchain_community
+dotenv
+chromadb
+pypdf
+langchain-classic
